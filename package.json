@@ -56,7 +56,7 @@
     "errorMsg": "Branch name validation failed"
   },
   "dependencies": {
-    "@ben-shepherd/larascript-core": "github:ben-shepherd/larascript-core",
+    "@ben-shepherd/larascript-core": "github:ben-shepherd/larascript-core#develop",
     "@ben-shepherd/larascript-logger": "github:ben-shepherd/larascript-logger",
     "@ben-shepherd/larascript-views": "github:ben-shepherd/larascript-views",
     "nodemailer": "^7.0.5",
