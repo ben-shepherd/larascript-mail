@@ -28,6 +28,10 @@ import {
   NodeMailerDriver, 
   ResendMailDriver 
 } from '@ben-shepherd/larascript-mail';
+import { CreateDependencyLoader } from '@ben-shepherd/larascript-core';
+import { ViewService } from '@ben-shepherd/larascript-views';
+import { LoggerService } from '@ben-shepherd/larascript-logger';
+import path from 'path';
 
 // Configure mail service using MailConfig for type hinting
 const mailConfig: IMailConfig = {
@@ -67,6 +71,22 @@ const mailConfig: IMailConfig = {
 // Create mail service
 const mailService = new MailService(mailConfig, {});
 
+// Set up dependencies (required for logging and template rendering)
+const view = new ViewService({
+    resourcesDir: path.join(process.cwd(), 'src/views')
+});
+
+const logger = new LoggerService({
+    logPath: path.join(process.cwd(), 'logs/mail.log')
+});
+
+mailService.setDependencyLoader(
+    CreateDependencyLoader.create({ view, logger })
+);
+
+// Boot the service to initialize adapters
+mailService.boot();
+
 // Send an email
 const mail = new Mail({
   to: 'recipient@example.com',
@@ -76,6 +96,40 @@ const mail = new Mail({
 });
 
 await mailService.send(mail);
+```
+
+## Dependencies
+
+The MailService requires certain dependencies to function properly:
+
+- **Logger Service**: For error logging and debugging
+- **View Service**: For rendering email templates
+
+These dependencies must be set up using a `DependencyLoader` before the service can be used.
+
+### Setting Up Dependencies
+
+```typescript
+import { CreateDependencyLoader } from '@ben-shepherd/larascript-core';
+import { ViewService } from '@ben-shepherd/larascript-views';
+import { LoggerService } from '@ben-shepherd/larascript-logger';
+
+// Create your services
+const view = new ViewService({
+    resourcesDir: path.join(process.cwd(), 'src/views')
+});
+
+const logger = new LoggerService({
+    logPath: path.join(process.cwd(), 'logs/mail.log')
+});
+
+// Set up the dependency loader
+mailService.setDependencyLoader(
+    CreateDependencyLoader.create({ view, logger })
+);
+
+// Boot the service to initialize adapters
+mailService.boot();
 ```
 
 ## Configuration
@@ -118,6 +172,8 @@ Need a custom mail driver? See our [extending guide](docs/extending.md) for deta
 ## API Reference
 
 ### MailService
+- `setDependencyLoader(loader: DependencyLoader)`: Set the dependency loader for accessing logger and view services
+- `boot()`: Initialize mail adapters with dependencies
 - `send(mail: IMail, driver?: string)`: Send an email
 - `getDefaultDriver()`: Get the default mail driver
 - `getDriver<T>(name: string)`: Get a specific mail driver
