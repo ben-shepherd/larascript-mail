@@ -4,7 +4,7 @@ import { IMail, IMailOptions, IMailViewData } from "../interfaces";
  * Represents a mail message.
  * @template T - The type of mail options.
  */
-class Mail<T extends IMailOptions = IMailOptions> implements IMail<T> {
+export class Mail<T extends IMailOptions = IMailOptions> implements IMail<T> {
   config: T;
 
   /**
