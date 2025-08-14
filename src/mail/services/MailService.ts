@@ -1,7 +1,7 @@
 import {
   BaseAdapter,
   DependencyLoader,
-  RequiresDependency
+  RequiresDependency,
 } from "@ben-shepherd/larascript-core";
 import { ILoggerService } from "@ben-shepherd/larascript-logger";
 import {
@@ -33,13 +33,13 @@ export class MailService
   }
 
   setDependencyLoader(loader: DependencyLoader): void {
-    this.loader = loader
-    this.logger = loader("logger")
+    this.loader = loader;
+    this.logger = loader("logger");
   }
 
   addAdapterOnce(name: string, adapter: MailAdapter): void {
-    adapter.setDependencyLoader(this.loader)
-    super.addAdapterOnce(name, adapter)
+    adapter.setDependencyLoader(this.loader);
+    super.addAdapterOnce(name, adapter);
   }
 
   /**

@@ -1,4 +1,7 @@
-import { BaseAdapterTypes, RequiresDependency } from "@ben-shepherd/larascript-core";
+import {
+  BaseAdapterTypes,
+  RequiresDependency,
+} from "@ben-shepherd/larascript-core";
 import LocalMailDriver from "../adapters/LocalMailDriver";
 import NodeMailDriver from "../adapters/NodeMailerDriver";
 import ResendMailDriver from "../adapters/ResendMailDriver";

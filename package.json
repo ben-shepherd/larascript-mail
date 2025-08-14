@@ -1,6 +1,6 @@
 {
   "name": "@ben-shepherd/larascript-mail",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Larascript bundle providing mail utilities and components.",
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
   },
   "scripts": {
     "prepare": "npm run build",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "build": "tsc --skipLibCheck && tsc-alias",
